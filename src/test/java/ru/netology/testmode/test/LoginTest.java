@@ -26,7 +26,7 @@ public class LoginTest {
         $("[data-test-id='login'] input").setValue(registeredUser.getLogin());
         $("[data-test-id='password'] input").setValue(registeredUser.getPassword());
         $(".button").click();
-        $("[id = 'root'] .heading").shouldBe(visible).shouldBe(exactText("Личный кабинет"));
+        $("h2").shouldBe(exactText("Личный кабинет"));
 
     }
     @Test

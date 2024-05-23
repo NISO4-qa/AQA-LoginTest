@@ -6,7 +6,6 @@ import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import lombok.Value;
-import org.junit.jupiter.api.BeforeAll;
 
 import java.util.Locale;
 
@@ -26,7 +25,7 @@ public class DataGenerator {
     private DataGenerator() {
     }
 
-    private static void sendRequest(Registration.RegistrationDto user) {
+    private static RegistrationDto sendRequest(RegistrationDto user) {
         // TODO: отправить запрос на указанный в требованиях path, передав в body запроса объект user
         //  и не забудьте передать подготовленную спецификацию requestSpec.
         //  Пример реализации метода показан в условии к задаче.
@@ -37,6 +36,7 @@ public class DataGenerator {
                 .post("/api/system/users")
                 .then()
                 .statusCode(200);
+        return user;
     }
 
     public static String getRandomPassword() {
@@ -56,19 +56,19 @@ public class DataGenerator {
         }
 
         public static RegistrationDto getRegisteredUser(String status) {
-            var registeredUser = getUser(status);
-            sendRequest(registeredUser);
-            return registeredUser;
-        }
 
-        @Value
-        public static class RegistrationDto {
-            String login;
-            String password;
-            String status;
+            return sendRequest(getUser(status));
         }
     }
+
+    @Value
+    public static class RegistrationDto {
+        String login;
+        String password;
+        String status;
+    }
 }
+
 
 
 
